@@ -25,13 +25,17 @@ This way, duplicate code is minimized while maintainability stays simple.
 # Module 2 - CI/CD & DevOps
 Link to the deployed website: hushed-hailee-kki-aldebaran-rahman-adhitya-2406365370-ec4340a3.koyeb.app/
 
+## Reflection
+
 1. One code quality issue that I have resolved so far is the redundant public keyword. 
 Specifically, this redundancy initially happened because ProductService.java already has a public keyword tied to it so adding public to describe its logic is redundant. 
 To resolve this, I removed the public keyword from the functions inside the interface and the issue was gone when I opened the PMD report file.
 I think I can extend this methodology by checking the PMD report file and finding what needs to be fixed. This way, I can minimize issues one by one and develop a robust application.
 2. So far, I think the current CI/CD workflow in this repository has met the definition of CI/CD.
-The main reason for this is whenever I make a git push to a branch that has a .yml file, I can automate the work of verifying if things are working or not.
-This reduces the amount of time that I use to make sure my code is working and allows me to focus more on building software that is aligned with my plan.
-Another reason is pushing changes (which have been verified) to main automatically deploys those latest changes to the website (for me, I used Koyeb to deploy my website).
-This helps me a lot since I don't have to worry much about deployment. Whenever my code does not work, I can go back, fix it, and push it to my main branch and let continuous deployment update the website.
-Overall, I learned quite a lot about CI/CD. I'm glad that this repository has implemented it optimally.
+The main reason for this is whenever I make a git push to a branch that has a .yml file, I can automate the work of verifying if things are working or not which counts as continuous integration.
+This reduces the amount of time that I use to make sure my code is working and allows me to focus more on building software that is aligned with my plan. In this repository, I implemented that by using automated workflows through GitHub Actions which compiles the Java code, runs tests to verify the codebase, and ensures quality code using tools such as PMD and OSSF Scorecard. 
+These verifications determine if a push can pass before merging into the main branch and therefore ensures the codebase stays stable. 
+Another reason is pushing changes (which have been verified) to main automatically deploys those latest changes to the website which falls under continuous deployment.
+This helps me a lot since I don't have to worry much about manually deploying the website every time I make a change. Whenever I make a push to main or a merge to main that has been verified by various workflows, Koyeb detects the change automatically, builds the application using Docker, and deploys it to a live server. 
+This automated process, which happens without human intervention, counts as continuous deployment.
+Overall, I learned quite a lot about CI/CD through this module. I'm glad that this repository has implemented it optimally.
