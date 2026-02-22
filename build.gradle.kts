@@ -1,5 +1,6 @@
 plugins {
     java
+    jacoco
     id("org.springframework.boot") version "3.2.2"
     id("io.spring.dependency-management") version "1.1.4"
 }
@@ -52,6 +53,7 @@ tasks.register<Test>("unitTest") {
     filter {
         excludeTestsMatching("*FunctionalTest")
     }
+    finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.register<Test>("functionalTest") {
@@ -65,4 +67,12 @@ tasks.register<Test>("functionalTest") {
 
 tasks.withType<Test>().configureEach {
     useJUnitPlatform()
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.named<Test>("unitTest"))
+    reports {
+        xml.required.set(true)
+        html.required.set(true)
+    }
 }
