@@ -21,3 +21,17 @@ As for code coverage, while getting to 100% code coverage is nice, I think aimin
 2. I don't think the new functional test suite is quite clean. This newly described code may reduce code quality because it violates the DRY principle due to the same set-up procedure and the same instance variables. 
 To solve this, I think the optimal solution would be to put all the set-up code in one parent class while making new tests in a different class.
 This way, duplicate code is minimized while maintainability stays simple.
+
+# Module 2 - CI/CD & DevOps
+Link to the deployed website: hushed-hailee-kki-aldebaran-rahman-adhitya-2406365370-ec4340a3.koyeb.app/
+
+1. One code quality issue that I have resolved so far is the redundant public keyword. 
+Specifically, this redundancy initially happened because ProductService.java already has a public keyword tied to it so adding public to describe its logic is redundant. 
+To resolve this, I removed the public keyword from the functions inside the interface and the issue was gone when I opened the PMD report file.
+I think I can extend this methodology by checking the PMD report file and finding what needs to be fixed. This way, I can minimize issues one by one and develop a robust application.
+2. So far, I think the current CI/CD workflow in this repository has met the definition of CI/CD.
+The main reason for this is whenever I make a git push to a branch that has a .yml file, I can automate the work of verifying if things are working or not.
+This reduces the amount of time that I use to make sure my code is working and allows me to focus more on building software that is aligned with my plan.
+Another reason is pushing changes (which have been verified) to main automatically deploys those latest changes to the website (for me, I used Koyeb to deploy my website).
+This helps me a lot since I don't have to worry much about deployment. Whenever my code does not work, I can go back, fix it, and push it to my main branch and let continuous deployment update the website.
+Overall, I learned quite a lot about CI/CD. I'm glad that this repository has implemented it optimally.
