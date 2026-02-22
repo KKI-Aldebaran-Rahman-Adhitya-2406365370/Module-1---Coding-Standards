@@ -1,0 +1,20 @@
+name: Continuous Deployment (CD)
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  verify-docker-build:
+    name: Verify Docker Build for PaaS
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the codebase
+        uses: actions/checkout@v4
+
+      - name: Test Docker image build
+        run: docker build -t eshop-app .
+
+      - name: Deployment Trigger Note
+        run: echo "Docker build successful. Koyeb will automatically pull and deploy the latest changes from the main branch."
