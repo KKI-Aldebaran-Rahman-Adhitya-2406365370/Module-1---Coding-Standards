@@ -39,3 +39,38 @@ Another reason is pushing changes (which have been verified) to main automatical
 This helps me a lot since I don't have to worry much about manually deploying the website every time I make a change. Whenever I make a push to main or a merge to main that has been verified by various workflows, Koyeb detects the change automatically, builds the application using Docker, and deploys it to a live server. 
 This automated process, which happens without human intervention, counts as continuous deployment.
 Overall, I learned quite a lot about CI/CD through this module. I'm glad that this repository has implemented it optimally.
+
+# Module 3 - OO Principles & Software Maintainability
+
+## Reflection
+
+### Explain what principles you apply to your project!
+In this project, in the after-solid branch, I applied the single-responsibility principle, the Liskov substitution principle, and the dependency inversion principle to fix the issues.
+I chose to apply these principles because the after-solid branch initially violated these three principles.
+As for the open-closed principle and the interface segregation principle, the branch did not violate these so changing the branch according to those principles is unnecessary.
+
+### Explain the advantages of applying SOLID principles to your project with examples.
+Personally, I think SOLID design principles have helped me a lot. It has modularized the code so things which are related are in their own file/class.
+Here, I applied the single-responsibility principle, the Liskov substitution principle, and the dependency inversion principle.
+
+For the single-responsibility principle, it helped me separate concerns and lower dependencies because it divided functionality across multiple smaller classes.
+For instance, the ProductController.java file originally had two distinct controllers which were ProductController and CarController.
+By putting the CarController code in its own class (CarController.java), I now know that the logic for cars is in CarController.java and the logic for products is in ProductController.java.
+
+For the Liskov substitution principle, it helped me identify unnecessary logic.
+In my after-solid branch, I implemented this by replacing "class CarController extends ProductController" with "class CarController".
+This way, the car logic does not use the logic from the logic for the product class.
+
+For the dependency inversion principle, this helped me by making the car depend on the interface of car instead of the depending on CarServiceImpl.java.
+I implemented this by changing "private CarServiceImpl carService;" to "private CarService carService;".
+This change improves the code because now the car depends on an abstraction instead of something like CarServiceImpl.java.
+
+### Explain the disadvantages of not applying SOLID principles to your project with examples.
+In my opinion, avoiding SOLID design principles can have serious consequences in the long run for a project.
+Perhaps not applying SOLID design principles can be tolerable for a brief moment. However, when the project needs to scale or needs to be more robust, I can imagine having a hard time trying to fix bugs instead of developing features.
+
+A few examples from my repository would mainly come from the before-solid branch. In that branch, the ProductController.java contains two different controllers. This violates the single-responsibility design principle.
+Allowing this code into a project could increase dependency and increase the number of required test cases.
+Another example is the line "class CarController extends ProductController" which violates the Liskov substitution principle. The car controller does not to inherit the methods from the product controller. If this code were pushed to a live project, then it may cause unintended consequences.
+Finally, another example of not applying SOLID design principles is the line "private CarServiceImpl carService;" which violates the dependency inversion principle since it should depend on abstractions instead.
+This type of code can cause a codebase to be rigid and fragile.
