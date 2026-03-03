@@ -62,7 +62,6 @@ public class ProductController {
 @RequestMapping("/car")
 class CarController extends ProductController {
 
-    // DIP Violation: Depending on concrete class instead of interface
     @Autowired
     private CarServiceImpl carService;
 
