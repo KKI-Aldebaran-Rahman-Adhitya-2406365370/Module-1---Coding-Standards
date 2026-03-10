@@ -50,22 +50,45 @@ class PaymentTest {
 
     @Test
     void testCreatePaymentVoucherRejectedNot16Chars() {
-        paymentData.put("voucherCode", "ESHOP1234ABC567"); // 15 chars
+        paymentData.put("voucherCode", "ESHOP1234ABC567");
         Payment payment = new Payment("pay-1", "VOUCHER_CODE", paymentData, order);
         assertEquals("REJECTED", payment.getStatus());
     }
 
     @Test
     void testCreatePaymentVoucherRejectedNotStartWithEshop() {
-        paymentData.put("voucherCode", "CORP1234ABC56789"); // 16 chars, wrong start
+        paymentData.put("voucherCode", "CORP1234ABC56789");
         Payment payment = new Payment("pay-1", "VOUCHER_CODE", paymentData, order);
         assertEquals("REJECTED", payment.getStatus());
     }
 
     @Test
     void testCreatePaymentVoucherRejectedNot8Digits() {
-        paymentData.put("voucherCode", "ESHOP1234ABC567X"); // 16 chars, 7 digits
+        paymentData.put("voucherCode", "ESHOP1234ABC567X");
         Payment payment = new Payment("pay-1", "VOUCHER_CODE", paymentData, order);
+        assertEquals("REJECTED", payment.getStatus());
+    }
+
+    @Test
+    void testCreatePaymentBankTransferSuccess() {
+        paymentData.put("bankName", "someRandomBank");
+        paymentData.put("referenceCode", "1234567890");
+        Payment payment = new Payment("pay-2", "BANK_TRANSFER", paymentData, order);
+        assertEquals("SUCCESS", payment.getStatus());
+    }
+
+    @Test
+    void testCreatePaymentBankTransferRejectedEmptyBankName() {
+        paymentData.put("bankName", "");
+        paymentData.put("referenceCode", "1234567890");
+        Payment payment = new Payment("pay-2", "BANK_TRANSFER", paymentData, order);
+        assertEquals("REJECTED", payment.getStatus());
+    }
+
+    @Test
+    void testCreatePaymentBankTransferRejectedNullReference() {
+        paymentData.put("bankName", "someRandomBank");
+        Payment payment = new Payment("pay-2", "BANK_TRANSFER", paymentData, order);
         assertEquals("REJECTED", payment.getStatus());
     }
 }
