@@ -25,14 +25,7 @@ public class Payment {
         if ("VOUCHER_CODE".equals(method)) {
             this.status = validateVoucherCode(paymentData.get("voucherCode")) ? "SUCCESS" : "REJECTED";
         } else if ("BANK_TRANSFER".equals(method)) {
-            String bankName = paymentData.get("bankName");
-            String referenceCode = paymentData.get("referenceCode");
-
-            if (bankName != null && !bankName.trim().isEmpty() && referenceCode != null && !referenceCode.trim().isEmpty()) {
-                this.status = "SUCCESS";
-            } else {
-                this.status = "REJECTED";
-            }
+            this.status = validateBankTransfer(paymentData) ? "SUCCESS" : "REJECTED";
         } else {
             this.status = "REJECTED";
         }
@@ -51,6 +44,23 @@ public class Payment {
         }
         boolean isNumCount8 = (numCount == 8);
         return isNumCount8;
+    }
+
+    private boolean validateBankTransfer(Map<String, String> paymentData) {
+        String bankName = paymentData.get("bankName");
+        String referenceCode = paymentData.get("referenceCode");
+
+        if (bankName == null || referenceCode == null) {
+            return false;
+        } else {
+            boolean isBankNameNotEmpty = (!bankName.trim().isEmpty());
+            boolean isReferenceCodeNotEmpty = (!referenceCode.trim().isEmpty());
+        }
+
+        boolean isBankNameNotEmpty = (!bankName.trim().isEmpty());
+        boolean isReferenceCodeNotEmpty = (!referenceCode.trim().isEmpty());
+
+        return (isBankNameNotEmpty && isReferenceCodeNotEmpty);
     }
 
     public void setStatus(String status) {
