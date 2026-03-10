@@ -44,4 +44,8 @@ public class Payment {
         return isNumCount8;
     }
 
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
 }
