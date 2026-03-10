@@ -74,3 +74,16 @@ Allowing this code into a project could increase dependency and increase the num
 Another example is the line "class CarController extends ProductController" which violates the Liskov substitution principle. The car controller does not to inherit the methods from the product controller. If this code were pushed to a live project, then it may cause unintended consequences.
 Finally, another example of not applying SOLID design principles is the line "private CarServiceImpl carService;" which violates the dependency inversion principle since it should depend on abstractions instead.
 This type of code can cause a codebase to be rigid and fragile.
+
+# Module 04: Test-Driven Development & Refactoring
+## Reflection
+
+### Reflect based on Percival (2017) proposed self-reflective questions (in “Principles and Best Practice of Testing” submodule, chapter “Evaluating Your Testing Objectives”), whether this TDD flow is useful enough for you or not. If not, explain things that you need to do next time you make more tests.
+I think TDD has proven itself to be quite useful for me because the [RED] and [GREEN] notations helped me ensure that the tests went well worked as planned for the modules. Furthermore, writing tests in advance encouraged me to think more about the constraints and limitations of the modules such as anticipating whether an error would occur at some point.
+Another improvement I found for myself is that it encouraged modular code since many of the tests that I had to wrote would work for one specific module without needing other modules. The tests also serve as useful references to look back on if, let's say, this becomes a project and other developers need to understand the functionality of the modules quickly.
+An area of improvement that I can think of would be spending more time on actually understanding on the fundamental behaviour of a module before start writing tests to verify its correctness.
+
+### You have created unit tests in Tutorial. Now reflect whether your tests have successfully followed F.I.R.S.T. principle or not. If not, explain things that you need to do the next time you create more tests.
+In my opinion, the tests have mostly successfully implemented the F.I.R.S.T principle. I'd argue that the tests are quick since (therefore correctly followed the fast principle) because they are unit tests that do not require access to a database or a website on the internet.
+The usage of @BeforeEach annotation ensures that new objects are created before every test is run (which implements the independent principle). As for the repeatable principle, this is done by using Mockito to stub the behaviour of OrderRepository in the service tests. This allows for outcomes to perform consistently in different environments.
+Another part of unit tests in this tutorial is that is uses the assert keyword to know if a test was done correctly or not without requiring further inspection. One improvement I can think of is the timely principle because spending more time on considering what to test before fully implementing a module is much safer than adding tests throughout development when an edge case is discovered.
