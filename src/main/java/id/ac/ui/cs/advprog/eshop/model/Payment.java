@@ -24,6 +24,15 @@ public class Payment {
 
         if ("VOUCHER_CODE".equals(method)) {
             this.status = validateVoucherCode(paymentData.get("voucherCode")) ? "SUCCESS" : "REJECTED";
+        } else if ("BANK_TRANSFER".equals(method)) {
+            String bankName = paymentData.get("bankName");
+            String referenceCode = paymentData.get("referenceCode");
+
+            if (bankName != null && !bankName.trim().isEmpty() && referenceCode != null && !referenceCode.trim().isEmpty()) {
+                this.status = "SUCCESS";
+            } else {
+                this.status = "REJECTED";
+            }
         } else {
             this.status = "REJECTED";
         }
