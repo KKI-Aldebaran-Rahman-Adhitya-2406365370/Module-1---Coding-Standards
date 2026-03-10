@@ -1,5 +1,7 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
+import id.ac.ui.cs.advprog.eshop.enums.PaymentMethod;
+import id.ac.ui.cs.advprog.eshop.enums.PaymentStatus;
 import lombok.Getter;
 
 import java.util.Map;
@@ -22,12 +24,14 @@ public class Payment {
         this.paymentData = paymentData;
         this.order = order;
 
-        if ("VOUCHER_CODE".equals(method)) {
-            this.status = validateVoucherCode(paymentData.get("voucherCode")) ? "SUCCESS" : "REJECTED";
-        } else if ("BANK_TRANSFER".equals(method)) {
-            this.status = validateBankTransfer(paymentData) ? "SUCCESS" : "REJECTED";
+        if (PaymentMethod.VOUCHER_CODE.getValue().equals(method)) {
+            this.status = validateVoucherCode(paymentData.get("voucherCode"))
+                    ? PaymentStatus.SUCCESS.getValue() : PaymentStatus.REJECTED.getValue();
+        } else if (PaymentMethod.BANK_TRANSFER.getValue().equals(method)) {
+            this.status = validateBankTransfer(paymentData)
+                    ? PaymentStatus.SUCCESS.getValue() : PaymentStatus.REJECTED.getValue();
         } else {
-            this.status = "REJECTED";
+            this.status = PaymentStatus.REJECTED.getValue();
         }
     }
 
@@ -42,8 +46,7 @@ public class Payment {
                 numCount++;
             }
         }
-        boolean isNumCount8 = (numCount == 8);
-        return isNumCount8;
+        return numCount == 8;
     }
 
     private boolean validateBankTransfer(Map<String, String> paymentData) {
@@ -52,15 +55,12 @@ public class Payment {
 
         if (bankName == null || referenceCode == null) {
             return false;
-        } else {
-            boolean isBankNameNotEmpty = (!bankName.trim().isEmpty());
-            boolean isReferenceCodeNotEmpty = (!referenceCode.trim().isEmpty());
         }
 
-        boolean isBankNameNotEmpty = (!bankName.trim().isEmpty());
-        boolean isReferenceCodeNotEmpty = (!referenceCode.trim().isEmpty());
+        boolean isBankNameNotEmpty = !bankName.trim().isEmpty();
+        boolean isReferenceCodeNotEmpty = !referenceCode.trim().isEmpty();
 
-        return (isBankNameNotEmpty && isReferenceCodeNotEmpty);
+        return isBankNameNotEmpty && isReferenceCodeNotEmpty;
     }
 
     public void setStatus(String status) {
