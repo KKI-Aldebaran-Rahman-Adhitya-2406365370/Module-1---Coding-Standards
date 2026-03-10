@@ -1,6 +1,5 @@
 package id.ac.ui.cs.advprog.eshop.model;
 
-import lombok.Builder;
 import lombok.Getter;
 
 import java.util.Map;
@@ -24,25 +23,25 @@ public class Payment {
         this.order = order;
 
         if ("VOUCHER_CODE".equals(method)) {
-            String voucher = paymentData.get("voucherCode");
-            if (voucher != null && voucher.length() == 16 && voucher.startsWith("ESHOP")) {
-                int numCount = 0;
-                for (char c : voucher.toCharArray()) {
-                    if (Character.isDigit(c)) {
-                        numCount++;
-                    }
-                }
-                if (numCount == 8) {
-                    this.status = "SUCCESS";
-                } else {
-                    this.status = "REJECTED";
-                }
-            } else {
-                this.status = "REJECTED";
-            }
+            this.status = validateVoucherCode(paymentData.get("voucherCode")) ? "SUCCESS" : "REJECTED";
         } else {
             this.status = "REJECTED";
         }
+    }
+
+    private boolean validateVoucherCode(String voucher) {
+        if (voucher == null || voucher.length() != 16 || !voucher.startsWith("ESHOP")) {
+            return false;
+        }
+
+        int numCount = 0;
+        for (char c : voucher.toCharArray()) {
+            if (Character.isDigit(c)) {
+                numCount++;
+            }
+        }
+        boolean isNumCount8 = (numCount == 8);
+        return isNumCount8;
     }
 
 }
