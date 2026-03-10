@@ -22,26 +22,31 @@ public class OrderController {
 
     @GetMapping("/create")
     public String createOrderPage() {
-        return null;
+        return "createOrder";
     }
 
     @GetMapping("/history")
     public String historyPage() {
-        return null;
+        return "orderHistoryForm";
     }
 
     @PostMapping("/history")
     public String historyPost(@RequestParam String author, Model model) {
-        return null;
+        model.addAttribute("orders", orderService.findAllByAuthor(author));
+        return "orderHistoryList";
     }
 
     @GetMapping("/pay/{orderId}")
     public String payPage(@PathVariable String orderId, Model model) {
-        return null;
+        model.addAttribute("order", orderService.findById(orderId));
+        return "orderPay";
     }
 
     @PostMapping("/pay/{orderId}")
     public String payPost(@PathVariable String orderId, @RequestParam String method, @RequestParam Map<String, String> paymentData, Model model) {
-        return null;
+        Order order = orderService.findById(orderId);
+        Payment payment = paymentService.addPayment(order, method, paymentData);
+        model.addAttribute("paymentId", payment.getId());
+        return "paymentIdResult";
     }
 }

@@ -2,6 +2,7 @@ package id.ac.ui.cs.advprog.eshop.controller;
 
 import id.ac.ui.cs.advprog.eshop.model.Order;
 import id.ac.ui.cs.advprog.eshop.model.Payment;
+import id.ac.ui.cs.advprog.eshop.model.Product;
 import id.ac.ui.cs.advprog.eshop.service.OrderService;
 import id.ac.ui.cs.advprog.eshop.service.PaymentService;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
@@ -56,7 +58,14 @@ class OrderControllerTest {
 
     @Test
     void testPayPage() throws Exception {
-        Order mockOrder = new Order("ord-1", new ArrayList<>(), 123L, "Safira");
+        List<Product> mockProducts = new ArrayList<>();
+        Product mockProduct = new Product();
+        mockProduct.setProductId("prod-1");
+        mockProduct.setProductName("Kecap");
+        mockProduct.setProductQuantity(1);
+        mockProducts.add(mockProduct);
+
+        Order mockOrder = new Order("ord-1", mockProducts, 123L, "Safira");
         doReturn(mockOrder).when(orderService).findById("ord-1");
 
         mockMvc.perform(get("/order/pay/ord-1"))
@@ -67,7 +76,14 @@ class OrderControllerTest {
 
     @Test
     void testPayPost() throws Exception {
-        Order mockOrder = new Order("ord-1", new ArrayList<>(), 123L, "Safira");
+        List<Product> mockProducts = new ArrayList<>();
+        Product mockProduct = new Product();
+        mockProduct.setProductId("prod-1");
+        mockProduct.setProductName("Kecap");
+        mockProduct.setProductQuantity(1);
+        mockProducts.add(mockProduct);
+
+        Order mockOrder = new Order("ord-1", mockProducts, 123L, "Safira");
         Payment mockPayment = new Payment("pay-1", "VOUCHER_CODE", new HashMap<>(), mockOrder);
 
         doReturn(mockOrder).when(orderService).findById("ord-1");
